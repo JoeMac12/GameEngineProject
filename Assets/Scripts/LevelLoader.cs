@@ -5,35 +5,39 @@ using UnityEngine.SceneManagement;
 
 public class LevelLoader : MonoBehaviour
 {
-    private GameManager _gameManager;
-    public void LoadLevel(string scenename)
-    {
-        SceneManager.LoadScene(scenename);
-    }
+	private GameManager _gameManager;
 
-    public void Awake()
-    {
-        _gameManager = FindObjectOfType<GameManager>();
-    }
+	public void LoadLevel(string scenename)
+	{
+		LoadScene(scenename);
+	}
 
-    void OnSceneLoaded(Scene scene, LoadSceneMode mode)
-    {
-        Debug.Log("OnSceneLoaded: " + scene.name);
-    }
-    void LoadScene(string sceneToLoad)
-    {
-        SceneManager.sceneLoaded += OnSceneLoaded;
+	public void Awake()
+	{
+		_gameManager = FindObjectOfType<GameManager>();
+	}
 
-        if (sceneToLoad != null)
-        {
-            if (sceneToLoad.StartsWith("GrassLevel"))
-            {
-                _gameManager.gameState = GameManager.GameState.GamePlay;
-            }
-            else if (sceneToLoad.StartsWith("MainMenu"))
-            {
-                _gameManager.gameState = GameManager.GameState.MainMenu;
-            }
-        }
-    }
+	void OnSceneLoaded(Scene scene, LoadSceneMode mode)
+	{
+		Debug.Log("Load Scene: " + scene.name);
+	}
+
+	void LoadScene(string sceneToLoad)
+	{
+		SceneManager.sceneLoaded += OnSceneLoaded;
+
+		if (sceneToLoad != null)
+		{
+			if (sceneToLoad.StartsWith("GrassLevel"))
+			{
+				_gameManager.gameState = GameManager.GameState.GamePlay;
+			}
+			else if (sceneToLoad.StartsWith("MainMenu"))
+			{
+				_gameManager.gameState = GameManager.GameState.MainMenu;
+			}
+
+			SceneManager.LoadScene(sceneToLoad);
+		}
+	}
 }

@@ -7,9 +7,9 @@ using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
-    private PlayerMovement _PlayerMovement;
-    private LevelLoader _LevelLoader;
-    private UIManager _UIManager;
+    public PlayerMovement _PlayerMovement;
+    public LevelLoader _LevelLoader;
+    public UIManager _UIManager;
 
     public GameObject player;
     public GameObject playerArt;
@@ -32,7 +32,7 @@ public class GameManager : MonoBehaviour
                 break;
             case GameState.OptionsMenu: OptionsMenu();
                 break;
-            case GameState.WinMenu: WinMenu(); 
+            case GameState.WinMenu: WinMenu();
                 break;
             case GameState.LoseMenu: LoseMenu();
                 break;
