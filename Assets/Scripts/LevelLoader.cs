@@ -25,6 +25,7 @@ public class LevelLoader : MonoBehaviour
 	void LoadScene(string sceneToLoad)
 	{
 		SceneManager.sceneLoaded += OnSceneLoaded;
+		Time.timeScale = 1.0f;
 
 		if (sceneToLoad != null)
 		{

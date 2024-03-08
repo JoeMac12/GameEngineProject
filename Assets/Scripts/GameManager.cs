@@ -22,6 +22,16 @@ public class GameManager : MonoBehaviour
     }
     void Update()
     {
+
+        if (Input.GetKeyDown(KeyCode.Escape) && gameState == GameState.GamePlay)
+        {
+            PauseGame();
+        }
+        else if (Input.GetKeyDown(KeyCode.Escape) && gameState == GameState.PauseMenu)
+        {
+            ResumeGame();
+        }
+
         switch (gameState)
         {
             case GameState.MainMenu: MainMenu();
@@ -44,7 +54,6 @@ public class GameManager : MonoBehaviour
         Cursor.visible = true;
         playerArt.SetActive(false);
         _PlayerMovement.enabled = false;
-
         _UIManager.UIMainMenu();
     }
 
@@ -86,5 +95,23 @@ public class GameManager : MonoBehaviour
     {
         spawnPoint = GameObject.FindWithTag("SpawnPoint");
         player.transform.position = spawnPoint.transform.position;
+    }
+
+    public void PauseGame()
+    {
+        gameState = GameState.PauseMenu;
+        _PlayerMovement.enabled = false;
+        Cursor.visible = true;
+        Time.timeScale = 0f;
+        _UIManager.UIPauseMenu();
+    }
+
+    public void ResumeGame()
+    {
+        gameState = GameState.GamePlay;
+        _PlayerMovement.enabled = true;
+        Cursor.visible = false;
+        Time.timeScale = 1f;
+        _UIManager.UIGamePlay();
     }
 }
