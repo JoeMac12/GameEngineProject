@@ -1,32 +1,17 @@
 using System.Collections;
 using System.Collections.Generic;
-using TMPro.EditorUtilities;
 using Unity.VisualScripting;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
-    private PlayerMovement _PlayerMovement;
-    private LevelLoader _LevelLoader;
-    private UIManager _UIManager;
-
-    public GameObject player;
-    public GameObject playerArt;
-    public GameObject spawnPoint;
-    public enum GameState { MainMenu, GamePlay, PauseMenu, OptionsMenu, WinMenu, LoseMenu }
+    public enum GameState { MainMenu, PauseMenu, OptionsMenu, WinMenu, LoseMenu }
     public GameState gameState;
-
-    public void Awake()
-    {
-    }
     void Update()
     {
         switch (gameState)
         {
             case GameState.MainMenu: MainMenu();
-                break;
-            case GameState.GamePlay: GamePlay();
                 break;
             case GameState.PauseMenu: PauseMenu();
                 break;
@@ -41,50 +26,20 @@ public class GameManager : MonoBehaviour
 
     private void MainMenu()
     {
-        Cursor.visible = true;
-        playerArt.SetActive(false);
-        _PlayerMovement.enabled = false;
-
-        _UIManager.UIMainMenu();
-    }
-
-    private void GamePlay()
-    {
-        Cursor.visible = false;
-        playerArt.SetActive(true);
-        _PlayerMovement.enabled = true;
-        _UIManager.UIGamePlay();
     }
 
     private void PauseMenu()
     {
-        Cursor.visible = true;
-        _UIManager.UIPauseMenu();
     }
 
     private void OptionsMenu()
     {
-        Cursor.visible = true;
-        _UIManager.UIOptionsMenu();
     }
+
     private void WinMenu()
     {
-        Cursor.visible = true;
-        _UIManager.UIWinMenu();
     }
     private void LoseMenu()
     {
-        Cursor.visible = true;
-        _UIManager.UILoseMenu();
-    }
-
-    public void QuitGame()
-    {
-        Application.Quit();
-    }
-    public void SpawnPoint()
-    {
-        spawnPoint = GameObject.FindWithTag("SpawnPoint");
-        player.transform.position = spawnPoint.transform.position;
     }
 }
