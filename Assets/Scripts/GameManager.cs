@@ -13,13 +13,13 @@ public class GameManager : MonoBehaviour
 
     public GameObject player;
     public GameObject playerArt;
-    public GameObject spawnPoint;
     public enum GameState { MainMenu, GamePlay, PauseMenu, OptionsMenu, WinMenu, LoseMenu }
     public GameState gameState;
 
     public void Awake()
     {
     }
+
     void Update()
     {
 
@@ -91,11 +91,6 @@ public class GameManager : MonoBehaviour
     {
         Application.Quit();
     }
-    public void SpawnPoint()
-    {
-        spawnPoint = GameObject.FindWithTag("SpawnPoint");
-        player.transform.position = spawnPoint.transform.position;
-    }
 
     public void PauseGame()
     {
@@ -113,5 +108,11 @@ public class GameManager : MonoBehaviour
         Cursor.visible = false;
         Time.timeScale = 1f;
         _UIManager.UIGamePlay();
+    }
+
+    public void ShowOptionsMenu()
+    {
+        gameState = GameState.OptionsMenu;
+        _UIManager.UIOptionsMenu();
     }
 }

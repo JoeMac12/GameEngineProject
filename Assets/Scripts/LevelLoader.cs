@@ -15,11 +15,17 @@ public class LevelLoader : MonoBehaviour
 	public void Awake()
 	{
 		_gameManager = FindObjectOfType<GameManager>();
+		SceneManager.sceneLoaded += OnSceneLoaded;
 	}
 
 	void OnSceneLoaded(Scene scene, LoadSceneMode mode)
 	{
 		Debug.Log("Load Scene: " + scene.name);
+
+		if (scene.name.StartsWith("GrassLevel"))
+		{
+			SpawnPlayerAtSpawnPoint();
+		}
 	}
 
 	void LoadScene(string sceneToLoad)
@@ -39,6 +45,26 @@ public class LevelLoader : MonoBehaviour
 			}
 
 			SceneManager.LoadScene(sceneToLoad);
+		}
+	}
+
+	private void SpawnPlayerAtSpawnPoint()
+	{
+		if (_gameManager != null && _gameManager.player != null)
+		{
+			GameObject spawnPoint = GameObject.FindWithTag("SpawnPoint");
+			if (spawnPoint != null)
+			{
+				_gameManager.player.transform.position = spawnPoint.transform.position;
+			}
+			else
+			{
+				Debug.LogError("no spawn");
+			}
+		}
+		else
+		{
+			Debug.LogError("something else is broken");
 		}
 	}
 }
