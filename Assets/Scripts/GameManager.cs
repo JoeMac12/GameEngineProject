@@ -32,6 +32,16 @@ public class GameManager : MonoBehaviour
             ResumeGame();
         }
 
+        if (Input.GetKeyDown(KeyCode.K) && gameState == GameState.GamePlay)
+        {
+            TriggerLoseMenu();
+        }
+
+        if (Input.GetKeyDown(KeyCode.H) && gameState == GameState.GamePlay)
+        {
+            HouseLevel();
+        }
+
         switch (gameState)
         {
             case GameState.MainMenu: MainMenu();
@@ -76,11 +86,13 @@ public class GameManager : MonoBehaviour
         Cursor.visible = true;
         _UIManager.UIOptionsMenu();
     }
+
     private void WinMenu()
     {
         Cursor.visible = true;
         _UIManager.UIWinMenu();
     }
+
     private void LoseMenu()
     {
         Cursor.visible = true;
@@ -114,5 +126,41 @@ public class GameManager : MonoBehaviour
     {
         gameState = GameState.OptionsMenu;
         _UIManager.UIOptionsMenu();
+    }
+
+    public void MainMenuOp()
+    {
+        gameState = GameState.MainMenu;
+        _UIManager.UIMainMenu();
+    }
+
+    public void TriggerLoseMenu()
+    {
+        gameState = GameState.LoseMenu;
+        _PlayerMovement.enabled = false;
+        playerArt.SetActive(false);
+        Cursor.visible = true;
+        Time.timeScale = 0f;
+        _UIManager.UILoseMenu();
+        _LevelLoader.LoadEndScene();
+    }
+
+    private void HouseLevel()
+    {
+        _LevelLoader.LoadHouseLevel();
+    }
+
+    public void GoBack()
+    {
+        Scene currentScene = SceneManager.GetActiveScene();
+
+        if (currentScene.name == "MainMenu")
+        {
+            MainMenuOp();
+        }
+        else if (currentScene.name == "GrassLevel" || currentScene.name == "HouseLevel")
+        {
+            PauseGame();
+        }
     }
 }

@@ -26,6 +26,10 @@ public class LevelLoader : MonoBehaviour
 		{
 			SpawnPlayerAtSpawnPoint();
 		}
+		else if (scene.name.StartsWith("HouseLevel"))
+		{
+			SpawnPlayerAtSpawnPoint();
+		}
 	}
 
 	void LoadScene(string sceneToLoad)
@@ -42,6 +46,14 @@ public class LevelLoader : MonoBehaviour
 			else if (sceneToLoad.StartsWith("MainMenu"))
 			{
 				_gameManager.gameState = GameManager.GameState.MainMenu;
+			}
+			else if (sceneToLoad.StartsWith("HouseLevel"))
+			{
+				_gameManager.gameState = GameManager.GameState.GamePlay;
+			}
+			else if (sceneToLoad.StartsWith("End"))
+			{
+				_gameManager.gameState = GameManager.GameState.LoseMenu;
 			}
 
 			SceneManager.LoadScene(sceneToLoad);
@@ -66,5 +78,15 @@ public class LevelLoader : MonoBehaviour
 		{
 			Debug.LogError("something else is broken");
 		}
+	}
+
+	public void LoadEndScene()
+	{
+		SceneManager.LoadScene("End");
+	}
+
+	public void LoadHouseLevel()
+	{
+		SceneManager.LoadScene("HouseLevel");
 	}
 }
